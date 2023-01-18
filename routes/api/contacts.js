@@ -2,13 +2,13 @@ const express = require('express');
 
 const { contacts: ctrl } = require('../../controllers');
 
-const { validation, ctrlWrapper } = require('../../middlewares');
+const { auth, validation, ctrlWrapper } = require('../../middlewares');
 
 const { contactSchemaJoi, favoriteSchemaJoi } = require('../../models');
 
 const router = express.Router();
 
-router.post('/', validation(contactSchemaJoi), ctrlWrapper(ctrl.add));
+router.post('/', auth, validation(contactSchemaJoi), ctrlWrapper(ctrl.add));
 
 router.put(
   '/:contactId',
@@ -22,7 +22,7 @@ router.patch(
   ctrlWrapper(ctrl.updateFavorite)
 );
 
-router.get('/', ctrlWrapper(ctrl.getAll));
+router.get('/', auth, ctrlWrapper(ctrl.getAll));
 
 router.get('/:contactId', ctrlWrapper(ctrl.getById));
 

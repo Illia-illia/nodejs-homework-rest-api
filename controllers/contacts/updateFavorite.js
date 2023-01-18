@@ -13,7 +13,7 @@ const updateFavorite = async (req, res) => {
     }
   );
   if (!result) {
-    throw createError(404, `Product with ID=${contactId} not found`);
+    throw createError(404, `Contact with ID=${contactId} not found`);
   }
   res.json({
     status: 'success',
