@@ -9,18 +9,19 @@ const updateAvatar = async (req, res) => {
   const { _id: id } = req.user;
   const imageName = `${id}_${originalname}`;
 
-  //   Jimp.read(tempUpload, (err, image) => {
-  //     if (err) throw err;
-  //     image
-  //       .resize(100, 100) // resize
-  //       .write(tempUpload); // save
-  //   });
-
   try {
     const resultUpload = path.join(avatarDir, imageName);
 
     await fs.rename(tempUpload, resultUpload);
+
+    Jimp.read(resultUpload, (err, image) => {
+      if (err) throw err;
+      image
+        .resize(250, 250) // resize
+        .write(resultUpload); // save
+    });
     const avatarURL = path.join('public', 'avatars', imageName);
+
     await User.findByIdAndUpdate(id, { avatarURL });
     res.json({
       avatarURL,
