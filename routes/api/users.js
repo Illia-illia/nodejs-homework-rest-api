@@ -6,6 +6,8 @@ const { users: ctrl } = require('../../controllers');
 
 const router = express.Router();
 
+router.post('/verify', ctrlWrapper(ctrl.verify));
+
 router.patch('/', auth, ctrlWrapper(ctrl.updateSubscription));
 
 router.patch(
